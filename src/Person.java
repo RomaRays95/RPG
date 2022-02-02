@@ -2,6 +2,38 @@ abstract class Person {
     private int HP;
     private int force;
     private int agility;
+    private boolean alive = true;
+
+
+    public synchronized boolean getDamage(int damage){
+        if (HP > 0) {
+            HP -= damage;
+            if (HP <= 0){
+                HP = 0;
+                alive = false;
+            }
+            return true;
+        }
+        else return false;
+    }
+
+    public void attack (Person person){
+        synchronized (person) {
+            if (person.getDamage(force)) {
+                System.out.println(this + " attacked " + person);
+                System.out.println(person + "HP have: " + person.getHP());
+                if (!person.alive) System.out.println(this + " died!");
+            }
+        }
+    }
+
+    public void sleep(int millis){
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public int getHP() {
         return HP;
@@ -25,5 +57,9 @@ abstract class Person {
 
     public void setAgility(int agility) {
         this.agility = agility;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 }

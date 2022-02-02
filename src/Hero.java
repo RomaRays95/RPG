@@ -6,6 +6,7 @@ public class Hero extends Person{
     private int exp;
 
     public Hero() {
+        super.setHP(110);
         do {
             System.out.println("Give a name to your hero. Min 3 letters.");
             Scanner sc = new Scanner(System.in);

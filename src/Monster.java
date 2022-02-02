@@ -1,2 +1,3 @@
-abstract class Monster extends Person{
+abstract class Monster extends Person implements Runnable{
+
 }
