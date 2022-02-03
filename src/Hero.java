@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Hero extends Person{
@@ -7,12 +8,14 @@ public class Hero extends Person{
 
     public Hero() {
         super.setHP(110);
+        super.setForce(20);
         do {
             System.out.println("Give a name to your hero. Min 3 letters.");
             Scanner sc = new Scanner(System.in);
             this.name = sc.nextLine();
         } while (name.length() <=2 || !(name.matches("[a-zа-яA-ZА-ЯёЁ]+")));
     }
+
 
     @Override
     public String toString() {

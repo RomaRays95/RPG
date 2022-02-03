@@ -20,9 +20,8 @@ abstract class Person {
     public void attack (Person person){
         synchronized (person) {
             if (person.getDamage(force)) {
-                System.out.println(this + " attacked " + person);
-                System.out.println(person + "HP have: " + person.getHP());
-                if (!person.alive) System.out.println(this + " died!");
+                System.out.println(this + " attacked " + person + "(" + person.HP + ")");
+                if (!person.alive) System.out.println(person + " died!");
             }
         }
     }

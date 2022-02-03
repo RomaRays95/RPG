@@ -18,4 +18,9 @@ public class Goblin extends Monster{
             sleep(1000 + random.nextInt(500));
         }
     }
+
+    @Override
+    public String toString() {
+        return "Goblin";
+    }
 }
