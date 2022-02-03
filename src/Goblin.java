@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Goblin extends Monster{
-    private Person opponent;
+    private final Person opponent;
 
     public Goblin(Person opponent) {
         super.setHP(100);
@@ -15,7 +15,7 @@ public class Goblin extends Monster{
         Random random = new Random();
         while (super.getHP() > 0 && opponent.getHP() > 0){
             attack(opponent);
-            sleep(1000 + random.nextInt(500));
+            sleep(1700 + random.nextInt(700));
         }
     }
 

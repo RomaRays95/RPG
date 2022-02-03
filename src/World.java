@@ -11,20 +11,25 @@ public class World {
         do {
             if (!hero.isAlive()) break;
             printWhatToDo(hero);
-            Scanner sc = new Scanner(System.in);
-            int input = sc.nextInt();
-            switch (input) {
-                case 1 -> {
-                    Fighting fighting = new Fighting(hero);
-                    fighting.thread.join();
+            try {
+                Scanner sc = new Scanner(System.in);
+                int input = sc.nextInt();
+                switch (input) {
+                    case 1 -> {
+                        Fighting fighting = new Fighting(hero);
+                        fighting.thread.join();
+                    }
+                    case 2 -> dialog(trader, hero);
+                    case 3 -> {
+                        trader = new Trader();
+                        dialog(trader, hero);
+                    }
+                    case 4 -> hero.drinkPotion();
+                    case 5 -> exit = false;
+                    default -> System.out.println("Repeat");
                 }
-                case 2 -> dialog(trader, hero);
-                case 3 -> {
-                    trader = new Trader();
-                    dialog(trader, hero);
-                }
-                case 4 -> exit = false;
-                default -> System.out.println("Repeat");
+            } catch (Exception e) {
+                System.out.println("Repeat");
             }
         } while (exit);
 
@@ -37,7 +42,8 @@ public class World {
         System.out.println("    1. I wanna go to dark forest!");
         System.out.println("    2. I wanna go to trader.");
         System.out.println("    3. I wanna find a new trader");
-        System.out.println("    4. I tired. Kill myself!");
+        System.out.println("    4. I wanna drink a potion");
+        System.out.println("    5. I tired. Kill myself!");
         System.out.println("Input number of your choice.");
     }
 

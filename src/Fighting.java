@@ -3,12 +3,12 @@ import java.util.Queue;
 import java.util.Random;
 
 public class Fighting implements Runnable{
-    Person hero;
+    Hero hero;
     Queue<Monster> monsters;
     Random random = new Random();
     Thread thread = new Thread(this);
 
-    public Fighting(Person hero1) {
+    public Fighting(Hero hero1) {
         monsters = new LinkedList<>();
         this.hero = hero1;
         monsters.add(createRandomMonster());
@@ -25,17 +25,20 @@ public class Fighting implements Runnable{
     public void run() {
         System.out.println("The enemy is found!");
         while (!monsters.isEmpty() && hero.isAlive()){
+            assert monsters.peek() != null;
             hero.attack(monsters.peek());
+            assert monsters.peek() != null;
             if (!monsters.peek().isAlive()) monsters.remove();
-            sleep(1000);
+            hero.drinkPotionAtFight(thread);
+            sleep();
         }
         if (hero.isAlive()) System.out.println(hero + " has killed them all!");
         else System.out.println("Happy and short life of " + hero + " has finished :((((");
     }
 
-    private void sleep(int millis){
+    private void sleep(){
         try {
-            Thread.sleep(millis);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

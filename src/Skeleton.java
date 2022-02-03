@@ -15,7 +15,7 @@ public class Skeleton extends Monster implements Runnable{
         Random random = new Random();
         while (super.getHP() > 0 && opponent.isAlive()){
             attack(opponent);
-            sleep(1000 + random.nextInt(1000));
+            sleep(1500 + random.nextInt(1500));
         }
     }
 

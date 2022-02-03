@@ -42,6 +42,10 @@ abstract class Person {
         this.HP = HP;
     }
 
+    public void upHP(int x){
+        this.HP += x;
+    }
+
     public int getForce() {
         return force;
     }
