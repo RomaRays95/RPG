@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class World {
     public boolean exit;
 
-    public World() throws InterruptedException {
+    public World(){
         Hero hero = new Hero();
         Trader trader = new Trader();
         exit = true;
@@ -18,11 +18,16 @@ public class World {
                     case 1 -> {
                         Fighting fighting = new Fighting(hero);
                         fighting.thread.join();
+                        Monster.difficulty++;
                     }
-                    case 2 -> dialog(trader, hero);
+                    case 2 -> {
+                        dialog(trader, hero);
+                        Monster.difficulty = 1;
+                    }
                     case 3 -> {
                         trader = new Trader();
                         dialog(trader, hero);
+                        Monster.difficulty = 1;
                     }
                     case 4 -> hero.drinkPotion();
                     case 5 -> exit = false;
@@ -58,7 +63,7 @@ public class World {
             Scanner sc = new Scanner(System.in);
             int input = sc.nextInt();
             switch (input) {
-                case 1 -> System.out.println("");
+                case 1 -> System.out.println();
                 case 2 -> buying(trader.whatWeHave, 2, hero);
                 case 3 -> buying(trader.whatWeHave, 3, hero);
                 case 4 -> buying(trader.whatWeHave, 4, hero);

@@ -1,32 +1,40 @@
+import java.util.Random;
+
 abstract class Person {
     private int HP;
     private int force;
     private int agility;
     private boolean alive = true;
+    Random random = new Random();
 
 
-    public synchronized boolean getDamage(int damage){
+    public synchronized boolean getDamage(int damage) {
         if (HP > 0) {
             HP -= damage;
-            if (HP <= 0){
+            if (HP <= 0) {
                 HP = 0;
                 alive = false;
             }
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
-    public void attack (Person person){
+    public void attack(Person person) {
         synchronized (person) {
-            if (person.getDamage(force)) {
-                System.out.println(this + " attacked " + person + "(" + person.HP + ")");
-                if (!person.alive) System.out.println(person + " died!");
+            if (this.alive) {
+                if (3 * agility >= random.nextInt(100)) {
+                    if (person.getDamage(force)) {
+                        System.out.println(this + " attacked " + person + "(" + person.HP + ")");
+                        if (!person.alive) System.out.println(person + " died!");
+                    }
+                } else {
+                    if (person.alive) System.out.println(this + " miss");
+                }
             }
         }
     }
 
-    public void sleep(int millis){
+    public void sleep(int millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
@@ -42,7 +50,7 @@ abstract class Person {
         this.HP = HP;
     }
 
-    public void upHP(int x){
+    public void upHP(int x) {
         this.HP += x;
     }
 

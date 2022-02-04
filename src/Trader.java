@@ -32,16 +32,16 @@ public class Trader extends Person{
             switch (var){
                 case 1 -> {
                     this.pointsHeal = 100;
-                    this.cost = 100;
+                    this.cost = 50;
                     this.durationSec = 2;
                 }
                 case 2 -> {
                     this.pointsHeal = 200;
-                    this.cost = 300;
+                    this.cost = 100;
                     this.durationSec = 4;
                 } case 3 -> {
                     this.pointsHeal = 300;
-                    this.cost = 500;
+                    this.cost = 150;
                     this.durationSec = 6;
                 }
             }

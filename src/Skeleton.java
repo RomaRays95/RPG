@@ -1,26 +1,29 @@
 import java.util.Random;
 
-public class Skeleton extends Monster implements Runnable{
-    private Person opponent;
+public class Skeleton extends Monster implements Runnable {
 
     public Skeleton(Person opponent) {
-        super.setHP(100);
-        super.setForce(10);
-        this.opponent = opponent;
-        new Thread(this).start();
+        super(opponent);
     }
 
     @Override
     public void run() {
         Random random = new Random();
-        while (super.getHP() > 0 && opponent.isAlive()){
+        while (super.getHP() > 0 && opponent.isAlive()) {
+            sleep(500);
             attack(opponent);
-            sleep(1500 + random.nextInt(1500));
+            sleep(1000 + random.nextInt(1500));
         }
     }
 
     @Override
     public String toString() {
-        return "Skeleton";
+        return "Skeleton" + difficulty + "." + localCountRoundEnemies;
     }
+
+    @Override
+    public Monster newMonster() {
+        return new Skeleton(opponent);
+    }
+
 }
