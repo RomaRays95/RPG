@@ -5,7 +5,9 @@ abstract class Monster extends Person implements Runnable {
     private int exp;
     Random random = new Random();
     protected final Person opponent;
+    //счетчик глубины леса. Чем дальше - тем сложнее
     public static int difficulty = 1;
+    //счетчик призванных мобов за раунд.
     public static int countRoundEnemies;
     protected int localCountRoundEnemies;
 

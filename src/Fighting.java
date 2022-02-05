@@ -21,6 +21,7 @@ public class Fighting implements Runnable{
         else return new Goblin(hero);
     }
 
+    //Добавил метод сюда, чтобы он вызывался независимо от количества противников
     private void createTheSameMonster(){
         //вероятность появления монстра
         if (random.nextInt(100) <= 15 - Monster.countRoundEnemies - monsters.size() + 2 * Monster.difficulty) {
@@ -32,6 +33,9 @@ public class Fighting implements Runnable{
         }
     }
 
+    //Поток атаки героя. Не стал его делать в самом классе, т.к. он у нас один и игра имеет смысл пока он жив.
+    // Здесь проще.
+    // Монстров убиваем в порядке очереди.
     @Override
     public void run() {
         System.out.println("The enemy is found!");

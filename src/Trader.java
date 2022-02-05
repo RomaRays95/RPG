@@ -10,7 +10,6 @@ public class Trader extends Person{
 
 
     class Shop{
-
         Random random = new Random();
 
         public Shop() {

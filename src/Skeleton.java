@@ -9,7 +9,7 @@ public class Skeleton extends Monster implements Runnable {
     @Override
     public void run() {
         Random random = new Random();
-        while (super.getHP() > 0 && opponent.isAlive()) {
+        while (getHP() > 0 && opponent.isAlive()) {
             sleep(500);
             attack(opponent);
             sleep(1000 + random.nextInt(1500));

@@ -1,18 +1,20 @@
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 abstract class Person {
-    private int HP;
     private int force;
     private int agility;
     private boolean alive = true;
     Random random = new Random();
+    // Атомик, т.к. кроме получения урона есть и другие методы в потоках, которые влияют на этот параметр.
+    private final AtomicInteger HP = new AtomicInteger();
 
 
     public synchronized boolean getDamage(int damage) {
-        if (HP > 0) {
-            HP -= damage;
-            if (HP <= 0) {
-                HP = 0;
+        if (HP.get() > 0) {
+            plusHP(-damage);
+            if (HP.get() <= 0) {
+                setHP(0);
                 alive = false;
             }
             return true;
@@ -20,16 +22,14 @@ abstract class Person {
     }
 
     public void attack(Person person) {
-        synchronized (person) {
-            if (this.alive) {
-                if (3 * agility >= random.nextInt(100)) {
-                    if (person.getDamage(force)) {
-                        System.out.println(this + " attacked " + person + "(" + person.HP + ")");
-                        if (!person.alive) System.out.println(person + " died!");
-                    }
-                } else {
-                    if (person.alive) System.out.println(this + " miss");
+        if (this.alive) {
+            if (3 * agility >= random.nextInt(100)) {
+                if (person.getDamage(force)) {
+                    System.out.println(this + " attacked " + person + "(" + person.HP.get() + ")");
+                    if (!person.alive) System.out.println(person + " died!");
                 }
+            } else {
+                if (person.alive) System.out.println(this + " miss");
             }
         }
     }
@@ -40,18 +40,6 @@ abstract class Person {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public int getHP() {
-        return HP;
-    }
-
-    public void setHP(int HP) {
-        this.HP = HP;
-    }
-
-    public void upHP(int x) {
-        this.HP += x;
     }
 
     public int getForce() {
@@ -72,5 +60,17 @@ abstract class Person {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public int getHP() {
+        return HP.get();
+    }
+
+    public void setHP(int i) {
+        HP.set(i);
+    }
+
+    public void plusHP(int i) {
+        HP.addAndGet(i);
     }
 }

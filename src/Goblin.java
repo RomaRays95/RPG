@@ -9,7 +9,7 @@ public class Goblin extends Monster {
 
     @Override
     public void run() {
-        while (super.getHP() > 0 && opponent.getHP() > 0) {
+        while (getHP() > 0 && opponent.isAlive()) {
             sleep(500);
             attack(opponent);
             sleep(1200 + random.nextInt(700));

@@ -56,8 +56,7 @@ public class World {
         System.out.println("Trader: I have some potions. Which one do you want?");
         System.out.println("1. Nothing. Goodbye.");
         for (Trader.Heals heal : trader.whatWeHave) {
-            System.out.print(trader.whatWeHave.indexOf(heal) + 2 + ". ");
-            System.out.println(heal);
+            System.out.println(trader.whatWeHave.indexOf(heal) + 2 + ". " + heal);
         }
         try {
             Scanner sc = new Scanner(System.in);

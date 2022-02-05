@@ -1,21 +1,37 @@
 import java.util.*;
 
 public class Hero extends Person {
-    @Override
-    public void upHP(int x) {
-        super.upHP(x);
-        if (getHP() > maxHealth) setHP(maxHealth);
-    }
-
     private int maxHealth;
     private String name;
     private int gold;
     private final Queue<Trader.Heals> backpack = new LinkedList<>();
     private int exp;
     private int lvl;
+    //Время нужно чтобы ограничить употребление зелий во время боя.
     static long currentTime;
     private int regeneration;
 
+    public Hero() {
+        setHP(200);
+        setForce(20);
+        this.exp = 0;
+        this.lvl = 1;
+        this.gold = 150;
+        this.maxHealth = 200;
+        this.regeneration = 2;
+        setAgility(25);
+        currentTime = System.currentTimeMillis();
+        do {
+            System.out.println("Give a name to your hero. Min 3 letters.");
+            Scanner sc = new Scanner(System.in);
+            this.name = sc.nextLine();
+        } while (name.length() <= 2 || !(name.matches("[a-zа-яA-ZА-ЯёЁ]+")));
+    }
+
+    public void upHP(int x) {
+        plusHP(x);
+        if (getHP() > maxHealth) setHP(maxHealth);
+    }
 
     public void drinkPotion() {
         try {
@@ -23,7 +39,6 @@ public class Hero extends Person {
         } catch (Exception e) {
             System.out.println("Your backpack is empty. Go first to a trader.");
         }
-        if (getHP() > maxHealth) setHP(maxHealth);
     }
 
 
@@ -50,6 +65,29 @@ public class Hero extends Person {
         }
     }
 
+    private void lvlUp(){
+        lvl++;
+        maxHealth += 10 + 2 * lvl;
+        setForce(getForce() + 2);
+        setAgility(getAgility() + 1);
+        plusHP(30);
+        regeneration = lvl;
+    }
+
+    public void receiveExp(int x) {
+        exp += x;
+        if (exp >= (20 + 10 * lvl)) {
+            exp -= 20 + lvl * 10;
+            lvlUp();
+            System.out.println(this + " upped " + lvl + " level.");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public void addPotion(Trader.Heals potion) {
         backpack.add(potion);
     }
@@ -66,44 +104,4 @@ public class Hero extends Person {
         gold += coins;
     }
 
-    public void receiveExp(int x) {
-        exp += x;
-        if (exp >= (20 + 10 * lvl)) {
-            exp -= 20 + lvl * 10;
-            lvlUp();
-            System.out.println(this + " upped " + lvl + " level.");
-        }
-    }
-
-    private void lvlUp(){
-        lvl++;
-        maxHealth += 10 + 2 * lvl;
-        setForce(getForce() + 2);
-        setAgility(getAgility() + 1);
-        setHP(getHP() + 30);
-        regeneration = lvl;
-    }
-
-    public Hero() {
-        setHP(200);
-        setForce(20);
-        this.exp = 0;
-        this.lvl = 1;
-        this.gold = 150;
-        this.maxHealth = 200;
-        this.regeneration = 2;
-        setAgility(25);
-        currentTime = System.currentTimeMillis();
-        do {
-            System.out.println("Give a name to your hero. Min 3 letters.");
-            Scanner sc = new Scanner(System.in);
-            this.name = sc.nextLine();
-        } while (name.length() <= 2 || !(name.matches("[a-zа-яA-ZА-ЯёЁ]+")));
-    }
-
-
-    @Override
-    public String toString() {
-        return name;
-    }
 }
