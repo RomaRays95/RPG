@@ -21,6 +21,7 @@ public class Hero extends Person {
         this.regeneration = 2;
         setAgility(25);
         currentTime = System.currentTimeMillis();
+//        получаем имя героя при его создании
         do {
             System.out.println("Give a name to your hero. Min 3 letters.");
             Scanner sc = new Scanner(System.in);
@@ -47,16 +48,18 @@ public class Hero extends Person {
         if ((double) getHP() / maxHealth < 0.33) {
             if (((System.currentTimeMillis() - currentTime) >= 10000)
                     && (!backpack.isEmpty())) {
+                int healPoints = backpack.peek().getPointsHeal();
                 int duration = backpack.remove().getDurationSec();
+//                Новый поток - чтобы лечение проиходило расстянуто во времени.
                 new Thread(() -> {
                     System.out.println(this + " is drinking a potion.");
                     for (int i = 0; i < duration; i++) {
-                        upHP(50);
                         try {
                             if (threadOfFight.isAlive()) Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                        upHP(healPoints/duration);
                     }
                     System.out.println("Healing ended. HP = " + getHP());
                     currentTime = System.currentTimeMillis();

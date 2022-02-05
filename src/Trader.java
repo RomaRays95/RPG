@@ -4,20 +4,14 @@ import java.util.Random;
 
 public class Trader extends Person{
     public List<Heals> whatWeHave = new ArrayList<>();
+    Random random = new Random();
+
     public Trader() {
-        new Shop();
-    }
-
-
-    class Shop{
-        Random random = new Random();
-
-        public Shop() {
-            for (int i = 0; i < 4; i++) {
-                whatWeHave.add(new Heals(random.nextInt(3)+1));
-            }
+        for (int i = 0; i < 4; i++) {
+            whatWeHave.add(new Heals(random.nextInt(3)+1));
         }
     }
+
     static class Heals{
         private int pointsHeal;
         private int cost;
@@ -31,7 +25,7 @@ public class Trader extends Person{
             switch (var){
                 case 1 -> {
                     this.pointsHeal = 100;
-                    this.cost = 50;
+                    this.cost = 40;
                     this.durationSec = 2;
                 }
                 case 2 -> {
@@ -40,7 +34,7 @@ public class Trader extends Person{
                     this.durationSec = 4;
                 } case 3 -> {
                     this.pointsHeal = 300;
-                    this.cost = 150;
+                    this.cost = 160;
                     this.durationSec = 6;
                 }
             }

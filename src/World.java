@@ -18,10 +18,12 @@ public class World {
                     case 1 -> {
                         Fighting fighting = new Fighting(hero);
                         fighting.thread.join();
+//                        Герой идет глубже в лес.
                         Monster.difficulty++;
                     }
                     case 2 -> {
                         dialog(trader, hero);
+//                        Возвращаемся в город и поэтому в лес пойдем сначала.
                         Monster.difficulty = 1;
                     }
                     case 3 -> {
